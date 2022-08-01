@@ -1492,6 +1492,9 @@ function! s:YRPaste(replace_last_paste_selection, nextvalue, direction, ...)
     "     let @" = 'test string'
     " would not be in the yankring as no mapping triggered this action.
     if a:replace_last_paste_selection != 1
+    	" Read history file again first so that get the up-to-date yanks by other vim instances
+        call s:YRHistoryRead()
+
         " Only check the default buffer is the user wants us to.
         " This was necessary prior to version 4.0 since we did not
         " capture as many items as 4.0 and above does. (A. Budden)
@@ -1531,16 +1534,16 @@ function! s:YRPaste(replace_last_paste_selection, nextvalue, direction, ...)
                 " value to the yankring.
                 call YRRecord(default_register)
             endif
-        endif
 
-        exec "normal! ".
-                    \ ((cmd_mode=='n') ? "" : "gv").
-                    \ ((v_count > 0)?(v_count):'').
-                    \ '"'.default_register.
-                    \ a:direction
-        let s:yr_paste_dir     = a:direction
-        let s:yr_prev_vis_mode = ((cmd_mode=='n') ? 0 : 1)
-        return
+	    exec "normal! ".
+                        \ ((cmd_mode=='n') ? "" : "gv").
+                        \ ((v_count > 0)?(v_count):'').
+                        \ '"'.default_register.
+                        \ a:direction
+            let s:yr_paste_dir     = a:direction
+            let s:yr_prev_vis_mode = ((cmd_mode=='n') ? 0 : 1)
+            return
+        endif
     endif
 
     " if s:yr_count > 0 || (
