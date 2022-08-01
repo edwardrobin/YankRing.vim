@@ -4,9 +4,9 @@
 
 let s:yr_history_v2_nl     = "\2" " Use double quotes for a special character
 let s:yr_history_v2_nl_pat = "\2"
-let s:yr_history_list = []
-let s:yr_history_last_upd = 0
-let s:yr_count            = 0
+let s:yr_history_list      = []
+let s:yr_history_last_upd  = 0
+let s:yr_count             = 0
 
 
 function! s:YRHistoryRead()
